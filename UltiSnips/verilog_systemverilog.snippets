@@ -1,0 +1,81 @@
+#================================================================================
+# Module related
+#================================================================================
+snippet Mod "module" b
+module ${1:name} (
+	${2:port}
+);
+
+endmodule
+endsnippet
+
+#================================================================================
+# Structure
+#================================================================================
+snippet ALpn "always pn" b
+always @(posedge ${1:clk} or negedge ${2:rst}) begin
+	if( ! $2 ) begin
+		$3 ;
+	end
+	$4
+end
+endsnippet
+
+snippet ALpp "always pp" b
+always @(posedge ${1:clk} or posedge ${2:rst}) begin
+	if( $2 ) begin
+		$3
+	end
+	$4
+end
+endsnippet
+
+snippet gen "generate" b
+generate
+	${1:body}
+endgenerate
+endsnippet
+
+snippet func "function" b
+function ${1:name} (${2: port})
+begin
+	${3:body}
+end
+endfunction
+endsnippet
+#================================================================================
+# condition
+#================================================================================
+snippet if "if" w
+if ( ${1:condition} ) begin
+	${2:body}
+end
+endsnippet
+
+snippet eif "else if" w
+else if ( ${1:condition} ) begin
+	${2:body}
+end
+endsnippet
+
+snippet case "case" w
+case(${1:op})
+	${2:cond1} : begin
+		${3:body}
+	end
+	default:begin
+		${3:body}
+	end
+encase
+endsnippet
+#================================================================================
+# misc
+#================================================================================
+
+snippet CC "comment block" w
+//================================================================================
+// ${1:Comment Here}
+//================================================================================
+
+$2
+endsnippet
