@@ -3,7 +3,9 @@
 #================================================================================
 snippet Mod "module" b
 module ${1:name} (
+
 	${2:port}
+
 );
 
 endmodule
@@ -12,31 +14,41 @@ endsnippet
 #================================================================================
 # Structure
 #================================================================================
-snippet ALpn "always pn" b
-always @(posedge ${1:clk} or negedge ${2:rst}) begin
+snippet Az "assign dst = src" b
+assign ${1:dst} = ${2:expr} ;
+endsnippet
+
+
+snippet Alpn "always pn" b
+always_ff @(posedge ${1:clk} or negedge ${2:rst}) begin
 	if( ! $2 ) begin
-		$3 ;
+		${3:reset_block} ;
 	end
-	$4
+	${4:func_body}
 end
 endsnippet
 
-snippet ALpp "always pp" b
-always @(posedge ${1:clk} or posedge ${2:rst}) begin
+snippet Alpp "always pp" b
+always_ff @(posedge ${1:clk} or posedge ${2:rst}) begin
 	if( $2 ) begin
-		$3
+		${3:reset_block} ;
 	end
-	$4
+	${4:func_body}
 end
 endsnippet
 
-snippet gen "generate" b
+snippet Alc "always comb" b
+always_comb
+	${1:body}
+endsnippet
+
+snippet Gen "generate" b
 generate
 	${1:body}
 endgenerate
 endsnippet
 
-snippet func "function" b
+snippet Func "function" b
 function ${1:name} (${2: port})
 begin
 	${3:body}
@@ -68,11 +80,22 @@ case(${1:op})
 	end
 encase
 endsnippet
+
+snippet for "for loop" w
+for(int i=${1:init}; i<${2:max}; i++) begin
+	${3:body}
+end
+endsnippet
 #================================================================================
 # misc
 #================================================================================
+snippet Be "begin end" w
+begin
+	${1:body}
+end
+endsnippet
 
-snippet CC "comment block" w
+snippet Cc "comment block" w
 //================================================================================
 // ${1:Comment Here}
 //================================================================================
