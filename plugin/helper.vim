@@ -33,11 +33,12 @@ command! -nargs=0 -bar VerilogInstFormat                call s:VerilogInstFormat
 command! AddHeader           :call AddHeader()
 command! AddIComment         :call AddInlineTag(" = Commment: ")
 command! AddIECO             :call AddInlineTag(" = ECO: ")
+command! RSEoL               :call s:Remove_Spaces_EndofLine()
 "==================================================
 "           variable
 "==================================================
 if exists("b:vlog_company") == 0
-   let b:vlog_company = "HXT"
+   let b:vlog_company = "EMM!!!"
 endif
 
 if exists("b:MAX_LENGTH_WIDTH") == 0
@@ -71,7 +72,7 @@ function! AddHeader()
   let cnt = cnt + 1
   call append(cnt,   "// Author             :".$USER)
   let cnt = cnt + 1
-  call append(cnt,   "// Updated On         :".strftime("%Y-%m-%d"))
+  call append(cnt,   "// Created On         :".strftime("%Y-%m-%d"))
   let cnt = cnt + 1
   call append(cnt,   "//-----------------------------------------------------------------------")
   let cnt = cnt + 1
@@ -138,7 +139,7 @@ function! s:VerilogGetSignal()
     for l:InternalFilter in OutputSignal
         call filter(InternalSignal,'v:val !~ l:InternalFilter')
     endfor
-endfunction 
+endfunction
 
 function! s:BlockAnnotation(BlockHead, BlockTail, Keyword, Nota)
     let l:bStart = "disable"
@@ -240,7 +241,7 @@ function! s:VerilogDefineFormat(linenum)
     "remove head & tail space
     let l:line = substitute(l:line, '^\s*', "", "")
     let l:line = substitute(l:line, '\s*;\s*$', "", "")
-    
+
     if l:line !~ ','
         if l:line =~ b:KEYWORD_TO_MATCH
             "keyword
@@ -337,7 +338,7 @@ function! s:VerilogInstFormat(linenum)
     let l:comment = matchstr(l:line, '\/\/.*$')
     "remove comment from line
     let l:line = substitute(l:line, '\/\/.*$', "", "")
-    
+
     if l:line =~ '^\s*\.' && l:line =~ '(' && l:line =~ ')'
         let l:line = substitute(l:line, '^\.\s*', "", "")
         "echo l:line
